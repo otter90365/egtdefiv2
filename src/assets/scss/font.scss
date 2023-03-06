@@ -1,0 +1,14 @@
+// font
+@for $i from 0 through 100 {
+  .rem-#{$i} {
+    font-size: 0.75rem + ($i * 0.0625);
+  }
+}
+// md
+@for $i from 0 through 100 {
+  @media (min-width: 960px) {
+    .rem-md-#{$i} {
+      font-size: 0.75rem + ($i * 0.0625);
+    }
+  }
+}

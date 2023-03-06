@@ -1,0 +1,31 @@
+// grid
+@mixin dai_vuetify_xl {
+  @media (max-width: 1904px) {
+    @content;
+  }
+}
+@mixin dai_vuetify_lg {
+  @media (max-width: 1264px) {
+    @content;
+  }
+}
+@mixin dai_vuetify_md {
+  @media (max-width: 960px) {
+    @content;
+  }
+}
+@mixin dai_vuetify_sm {
+  @media (max-width: 600px) {
+    @content;
+  }
+}
+@mixin dai_max($_w) {
+  @media (max-width: $_w + "px") {
+    @content;
+  }
+}
+@mixin dai_min($_w) {
+  @media (min-width: $_w + "px") {
+    @content;
+  }
+}
