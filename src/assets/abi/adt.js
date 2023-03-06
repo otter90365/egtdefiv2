@@ -60,9 +60,14 @@ const abi = [
 				"internalType": "address",
 				"name": "_token",
 				"type": "address"
+			},
+			{
+				"internalType": "uint256",
+				"name": "_decimal",
+				"type": "uint256"
 			}
 		],
-		"name": "addtokentolist",
+		"name": "addTokentoList",
 		"outputs": [],
 		"stateMutability": "nonpayable",
 		"type": "function"
@@ -148,16 +153,16 @@ const abi = [
 		"type": "function"
 	},
 	{
-		"inputs": [
+		"inputs": [],
+		"name": "defaultOwner",
+		"outputs": [
 			{
-				"internalType": "uint256",
-				"name": "amount",
-				"type": "uint256"
+				"internalType": "address",
+				"name": "",
+				"type": "address"
 			}
 		],
-		"name": "distribute",
-		"outputs": [],
-		"stateMutability": "nonpayable",
+		"stateMutability": "view",
 		"type": "function"
 	},
 	{
@@ -173,22 +178,9 @@ const abi = [
 				"type": "uint256"
 			}
 		],
-		"name": "distributemortgages",
+		"name": "distribute",
 		"outputs": [],
 		"stateMutability": "nonpayable",
-		"type": "function"
-	},
-	{
-		"inputs": [],
-		"name": "dividend",
-		"outputs": [
-			{
-				"internalType": "uint256",
-				"name": "",
-				"type": "uint256"
-			}
-		],
-		"stateMutability": "view",
 		"type": "function"
 	},
 	{
@@ -199,7 +191,7 @@ const abi = [
 				"type": "address"
 			}
 		],
-		"name": "dividendmortgage",
+		"name": "dividendMortgage",
 		"outputs": [
 			{
 				"internalType": "uint256",
@@ -231,12 +223,31 @@ const abi = [
 				"type": "address"
 			}
 		],
-		"name": "mask",
+		"name": "isDeFi",
 		"outputs": [
 			{
-				"internalType": "uint256",
+				"internalType": "bool",
 				"name": "",
-				"type": "uint256"
+				"type": "bool"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "address",
+				"name": "",
+				"type": "address"
+			}
+		],
+		"name": "isToken",
+		"outputs": [
+			{
+				"internalType": "bool",
+				"name": "",
+				"type": "bool"
 			}
 		],
 		"stateMutability": "view",
@@ -255,7 +266,7 @@ const abi = [
 				"type": "address"
 			}
 		],
-		"name": "maskmortgage",
+		"name": "maskMortgage",
 		"outputs": [
 			{
 				"internalType": "uint256",
@@ -280,37 +291,6 @@ const abi = [
 		"type": "function"
 	},
 	{
-		"inputs": [
-			{
-				"internalType": "address",
-				"name": "_token",
-				"type": "address"
-			},
-			{
-				"internalType": "uint256",
-				"name": "_decimal",
-				"type": "uint256"
-			}
-		],
-		"name": "setdecimal",
-		"outputs": [],
-		"stateMutability": "nonpayable",
-		"type": "function"
-	},
-	{
-		"inputs": [
-			{
-				"internalType": "address",
-				"name": "_egtdefi",
-				"type": "address"
-			}
-		],
-		"name": "setdefi",
-		"outputs": [],
-		"stateMutability": "nonpayable",
-		"type": "function"
-	},
-	{
 		"inputs": [],
 		"name": "symbol",
 		"outputs": [
@@ -331,7 +311,7 @@ const abi = [
 				"type": "address"
 			}
 		],
-		"name": "tokendecimal",
+		"name": "tokenDecimal",
 		"outputs": [
 			{
 				"internalType": "uint256",
@@ -350,7 +330,7 @@ const abi = [
 				"type": "uint256"
 			}
 		],
-		"name": "tokenlist",
+		"name": "tokenList",
 		"outputs": [
 			{
 				"internalType": "address",
@@ -371,7 +351,7 @@ const abi = [
 				"type": "uint256"
 			}
 		],
-		"stateMutability": "pure",
+		"stateMutability": "view",
 		"type": "function"
 	},
 	{
@@ -431,19 +411,6 @@ const abi = [
 		"inputs": [
 			{
 				"internalType": "address",
-				"name": "holder",
-				"type": "address"
-			}
-		],
-		"name": "update",
-		"outputs": [],
-		"stateMutability": "nonpayable",
-		"type": "function"
-	},
-	{
-		"inputs": [
-			{
-				"internalType": "address",
 				"name": "_token",
 				"type": "address"
 			},
@@ -453,7 +420,7 @@ const abi = [
 				"type": "address"
 			}
 		],
-		"name": "updatemortgage",
+		"name": "update",
 		"outputs": [],
 		"stateMutability": "nonpayable",
 		"type": "function"

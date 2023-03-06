@@ -21,8 +21,8 @@ export default class ADT {
 
   async getMortgageAmount(walletAddress, token) {
     let balance = await this.contract.methods.balanceOf(walletAddress).call() / (10 ** 18);
-    let dividend = await this.contract.methods.dividendmortgage(token).call();
-    let mask = await this.contract.methods.maskmortgage(token, walletAddress).call();
+    let dividend = await this.contract.methods.dividendMortgage(token).call();
+    let mask = await this.contract.methods.maskMortgage(token, walletAddress).call();
     let claimable = (dividend - mask) * balance / (10 ** 18)
     let result = Number.isInteger(claimable) ? claimable : claimable.toFixed(5)
     return result
