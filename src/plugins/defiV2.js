@@ -23,8 +23,8 @@ export default class DefiV2 {
    * @return {Promise<{name: string, tokenaddress: string, decimals: number}[]>} */
   async getTokenList() {
     /** @type {number} */
-    const supportedTokenAmount = await this.contract.methods.Tradetokenamount().call();
-    const tokenList = await Promise.all(range(0, supportedTokenAmount).map(i => this.contract.methods.Tradetokens(i).call()));
+    const supportedTokenAmount = await this.contract.methods.TradeTokenAmount().call();
+    const tokenList = await Promise.all(range(0, supportedTokenAmount).map(i => this.contract.methods.TradeTokens(i).call()));
     return tokenList.filter(data => data.status)
       .map(({ name, tokenaddress, decimals }) => ({ name, tokenaddress, decimals }));
   }
@@ -43,7 +43,7 @@ export default class DefiV2 {
 
   // Get total amount
   async getTotalAmount() {
-    let amount = await this.contract.methods.totalamount().call();
+    let amount = await this.contract.methods.totalAmount().call();
     return amount / (10 ** 18);
   }
 
@@ -74,7 +74,7 @@ export default class DefiV2 {
     const wantString = want.toLocaleString('fullwide', { useGrouping: false });
     const amountString = amount.toLocaleString('fullwide', { useGrouping: false });
     const rateString = rate.toLocaleString('fullwide', { useGrouping: false });
-    let extraData = await this.contract.methods.ercorder(tokenAddress, wantString, amountString, rateString, lendday);
+    let extraData = await this.contract.methods.ercOrder(tokenAddress, wantString, amountString, rateString, lendday);
     let data = extraData.encodeABI();
     return this.sendTransaction(data);
   }
@@ -90,7 +90,7 @@ export default class DefiV2 {
   //   const wantString = want.toLocaleString('fullwide', {useGrouping:false})
   //   const amountString = amount.toLocaleString('fullwide', {useGrouping:false})
   //   const rateString = rate.toLocaleString('fullwide', {useGrouping:false})
-  //   let extraData = await this.contract.methods.ethorder(wantString, rateString, lendday)
+  //   let extraData = await this.contract.methods.ethOrder(wantString, rateString, lendday)
   //   let data = extraData.encodeABI()
   //   return this.sendTransaction(data, amountString)
   // }
@@ -102,7 +102,7 @@ export default class DefiV2 {
    */
   async getOrderAmount(tokenAddress) {
     try {
-      let result = await this.contract.methods.tokenorders(tokenAddress).call();
+      let result = await this.contract.methods.tokenOrders(tokenAddress).call();
       return parseInt(result);
     } catch (error) {
       console.log('error', error);
@@ -123,7 +123,7 @@ export default class DefiV2 {
 
       const reqList = startAmount.map(startIndex => (async () => {
         /** @type {number[]} */
-        const result = await this.contract.methods.allorder(tokenAddress, startIndex, true).call();
+        const result = await this.contract.methods.allOrder(tokenAddress, startIndex, true).call();
         return result;
       })());
 
@@ -167,7 +167,7 @@ export default class DefiV2 {
         .map(i => i * 50);
 
       const orderIndex = (await Promise.all(startAmount.map(
-        i => this.contract.methods.selforder(
+        i => this.contract.methods.selfOrder(
           type === 'lender' ? 1 : 2,
           tokenAddress,
           i
@@ -200,7 +200,7 @@ export default class DefiV2 {
   async getAllOrderDetail(orderList = [], filterCanorder, isReceipt, filterPosition) {
     const results = await Promise.all(orderList.map(order => {
       return (async () => {
-        const canorder = await this.contract.methods.canorder(order.tokenAddress, order.tokenOrder).call();
+        const canorder = await this.contract.methods.canOrder(order.tokenAddress, order.tokenOrder).call();
         if (filterCanorder) {
           if (!canorder) return false;
         }
@@ -230,9 +230,9 @@ export default class DefiV2 {
         if (!canorder && isReceipt) {
           let receipt = await this.contract.methods.Ious(order.tokenAddress, order.tokenOrder).call();
           // console.log('receipt', receipt)
-          data.isComplete = receipt.completeorder;
+          data.isComplete = receipt.completeOrder;
           data.filledTime = parseInt(receipt.lenderordertime);
-          data.completeordertime = parseInt(receipt.completeordertime)
+          data.completeordertime = parseInt(receipt.completeOrdertime)
         }
         return data;
       })();
@@ -253,7 +253,7 @@ export default class DefiV2 {
    */
   async getOrderDetail(tokenAddress, orderIndex, filterCanorder, isReceipt, filterAddress) {
     const orders = (await Promise.all(orderIndex.map(i => (async () => {
-      let canorder = await this.contract.methods.canorder(tokenAddress, i).call();
+      let canorder = await this.contract.methods.canOrder(tokenAddress, i).call();
 
       // 過濾已成交訂單
       if (filterCanorder) {
@@ -290,9 +290,9 @@ export default class DefiV2 {
       if (!canorder && isReceipt) {
         let receipt = await this.contract.methods.Ious(tokenAddress, i).call();
         // console.log('receipt', receipt)
-        data.isComplete = receipt.completeorder;
+        data.isComplete = receipt.completeOrder;
         data.filledTime = parseInt(receipt.lenderordertime);
-        data.completeordertime = receipt.completeordertime
+        data.completeordertime = receipt.completeOrdertime
       }
 
       return data;
@@ -302,25 +302,25 @@ export default class DefiV2 {
   }
 
   async selectOrder(token, i) {
-    let extraData = await this.contract.methods.choseorder(token, i);
+    let extraData = await this.contract.methods.choseOrder(token, i);
     let data = extraData.encodeABI();
     return this.sendTransaction(data);
   }
 
   async payback(token, i) {
-    let extraData = await this.contract.methods.payback(token, i);
+    let extraData = await this.contract.methods.payBack(token, i);
     let data = extraData.encodeABI();
     return this.sendTransaction(data);
   }
 
   async take(token, i) {
-    let extraData = await this.contract.methods.takemortgage(token, i);
+    let extraData = await this.contract.methods.takeMortgage(token, i);
     let data = extraData.encodeABI();
     return this.sendTransaction(data);
   }
 
   async cancel(token, i) {
-    let extraData = await this.contract.methods.borrowertake(token, i);
+    let extraData = await this.contract.methods.borrowerTake(token, i);
     let data = extraData.encodeABI();
     return this.sendTransaction(data);
   }

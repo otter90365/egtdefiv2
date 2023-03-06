@@ -163,12 +163,12 @@ const defiV2 = [
       },
       {
         "internalType": "bool",
-        "name": "completeorder",
+        "name": "completeOrder",
         "type": "bool"
       },
       {
         "internalType": "uint256",
-        "name": "completeordertime",
+        "name": "completeOrdertime",
         "type": "uint256"
       }
     ],
@@ -241,7 +241,7 @@ const defiV2 = [
   },
   {
     "inputs": [],
-    "name": "Tradetokenamount",
+    "name": "TradeTokenAmount",
     "outputs": [
       {
         "internalType": "uint256",
@@ -260,7 +260,7 @@ const defiV2 = [
         "type": "uint256"
       }
     ],
-    "name": "Tradetokens",
+    "name": "TradeTokens",
     "outputs": [
       {
         "internalType": "string",
@@ -281,6 +281,19 @@ const defiV2 = [
         "internalType": "uint256",
         "name": "decimals",
         "type": "uint256"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "admin",
+    "outputs": [
+      {
+        "internalType": "address",
+        "name": "",
+        "type": "address"
       }
     ],
     "stateMutability": "view",
@@ -317,7 +330,7 @@ const defiV2 = [
         "type": "bool"
       }
     ],
-    "name": "allorder",
+    "name": "allOrder",
     "outputs": [
       {
         "internalType": "uint256[50]",
@@ -341,7 +354,7 @@ const defiV2 = [
         "type": "uint256"
       }
     ],
-    "name": "borrowertake",
+    "name": "borrowerTake",
     "outputs": [],
     "stateMutability": "nonpayable",
     "type": "function"
@@ -359,7 +372,7 @@ const defiV2 = [
         "type": "uint256"
       }
     ],
-    "name": "canorder",
+    "name": "canOrder",
     "outputs": [
       {
         "internalType": "bool",
@@ -383,7 +396,7 @@ const defiV2 = [
         "type": "uint256"
       }
     ],
-    "name": "choseorder",
+    "name": "choseOrder",
     "outputs": [],
     "stateMutability": "nonpayable",
     "type": "function"
@@ -401,7 +414,7 @@ const defiV2 = [
         "type": "uint256"
       }
     ],
-    "name": "completeorder",
+    "name": "completeOrder",
     "outputs": [
       {
         "internalType": "bool",
@@ -466,7 +479,7 @@ const defiV2 = [
         "type": "uint256"
       }
     ],
-    "name": "ercorder",
+    "name": "ercOrder",
     "outputs": [],
     "stateMutability": "nonpayable",
     "type": "function"
@@ -489,19 +502,38 @@ const defiV2 = [
         "type": "uint256"
       }
     ],
-    "name": "ethorder",
+    "name": "ethOrder",
     "outputs": [],
     "stateMutability": "payable",
     "type": "function"
   },
   {
     "inputs": [],
-    "name": "ethtoken",
+    "name": "ethToken",
     "outputs": [
       {
         "internalType": "address",
         "name": "",
         "type": "address"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "",
+        "type": "address"
+      }
+    ],
+    "name": "isController",
+    "outputs": [
+      {
+        "internalType": "bool",
+        "name": "",
+        "type": "bool"
       }
     ],
     "stateMutability": "view",
@@ -534,7 +566,7 @@ const defiV2 = [
         "type": "address"
       }
     ],
-    "name": "istradetoken",
+    "name": "isTradeToken",
     "outputs": [
       {
         "internalType": "bool",
@@ -547,7 +579,7 @@ const defiV2 = [
   },
   {
     "inputs": [],
-    "name": "maxrate",
+    "name": "maxRate",
     "outputs": [
       {
         "internalType": "uint256",
@@ -560,7 +592,7 @@ const defiV2 = [
   },
   {
     "inputs": [],
-    "name": "minirate",
+    "name": "miniRate",
     "outputs": [
       {
         "internalType": "uint256",
@@ -585,19 +617,6 @@ const defiV2 = [
     "type": "function"
   },
   {
-    "inputs": [],
-    "name": "payableadt",
-    "outputs": [
-      {
-        "internalType": "address",
-        "name": "",
-        "type": "address"
-      }
-    ],
-    "stateMutability": "view",
-    "type": "function"
-  },
-  {
     "inputs": [
       {
         "internalType": "address",
@@ -610,7 +629,7 @@ const defiV2 = [
         "type": "uint256"
       }
     ],
-    "name": "payback",
+    "name": "payBack",
     "outputs": [],
     "stateMutability": "nonpayable",
     "type": "function"
@@ -678,7 +697,7 @@ const defiV2 = [
         "type": "uint256"
       }
     ],
-    "name": "selforder",
+    "name": "selfOrder",
     "outputs": [
       {
         "internalType": "uint256[50]",
@@ -698,32 +717,6 @@ const defiV2 = [
       }
     ],
     "name": "setController",
-    "outputs": [],
-    "stateMutability": "nonpayable",
-    "type": "function"
-  },
-  {
-    "inputs": [
-      {
-        "internalType": "uint256",
-        "name": "_decimals",
-        "type": "uint256"
-      }
-    ],
-    "name": "setUSDT",
-    "outputs": [],
-    "stateMutability": "nonpayable",
-    "type": "function"
-  },
-  {
-    "inputs": [
-      {
-        "internalType": "address payable",
-        "name": "_adt",
-        "type": "address"
-      }
-    ],
-    "name": "setcontract",
     "outputs": [],
     "stateMutability": "nonpayable",
     "type": "function"
@@ -751,7 +744,7 @@ const defiV2 = [
         "type": "uint256"
       }
     ],
-    "name": "setmortgagetoken",
+    "name": "setMortgageToken",
     "outputs": [],
     "stateMutability": "nonpayable",
     "type": "function"
@@ -760,12 +753,12 @@ const defiV2 = [
     "inputs": [
       {
         "internalType": "uint256",
-        "name": "_minirate",
+        "name": "_miniRate",
         "type": "uint256"
       },
       {
         "internalType": "uint256",
-        "name": "_maxrate",
+        "name": "_maxRate",
         "type": "uint256"
       }
     ],
@@ -787,7 +780,7 @@ const defiV2 = [
         "type": "bool"
       }
     ],
-    "name": "shelfmortgagetoken",
+    "name": "shelfMortgageToken",
     "outputs": [],
     "stateMutability": "nonpayable",
     "type": "function"
@@ -805,7 +798,7 @@ const defiV2 = [
         "type": "uint256"
       }
     ],
-    "name": "takemortgage",
+    "name": "takeMortgage",
     "outputs": [],
     "stateMutability": "nonpayable",
     "type": "function"
@@ -818,7 +811,7 @@ const defiV2 = [
         "type": "address"
       }
     ],
-    "name": "tokenorders",
+    "name": "tokenOrders",
     "outputs": [
       {
         "internalType": "uint256",
@@ -831,7 +824,7 @@ const defiV2 = [
   },
   {
     "inputs": [],
-    "name": "totalamount",
+    "name": "totalAmount",
     "outputs": [
       {
         "internalType": "uint256",
