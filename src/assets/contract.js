@@ -1,4 +1,5 @@
 // bsc
+require('dotenv').config()
 export const DefiAddress = '0x4685A7122971CED7b0b8FdB95Cb40eeC4BE174a3';
 
 export const DefiAddressV2TBT = process.env.VUE_APP_DEFI_V2_TBT_ADDRESS;
