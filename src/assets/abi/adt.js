@@ -420,7 +420,7 @@ const abi = [
 				"type": "address"
 			}
 		],
-		"name": "update",
+		"name": "upDate",
 		"outputs": [],
 		"stateMutability": "nonpayable",
 		"type": "function"

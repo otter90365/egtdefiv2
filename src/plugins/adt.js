@@ -29,7 +29,7 @@ export default class ADT {
   }
 
   async claim(walletAddress){
-    let extraData =  await this.contract.methods.update(walletAddress)
+    let extraData =  await this.contract.methods.upDate(walletAddress)
     let data = extraData.encodeABI()
     return this.sendTransaction(data)
   }
