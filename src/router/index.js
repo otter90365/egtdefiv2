@@ -256,7 +256,7 @@ router.beforeEach(async (to, from, next) => {
       store.commit('updateTokenList', tokenList);
       store.commit('updateTokenListV2', tokenListV2);
       // get contract address
-      let address = await defiContract.getAddress();
+      let address = await defiContractV2.getAddress();
       if (address === 'error') {
         console.log('error');
       } else {

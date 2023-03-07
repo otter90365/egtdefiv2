@@ -78,7 +78,7 @@ export default new Vuex.Store({
     },
     updateAddress(state, address) {
       state.ADTAddress = address.adt
-      state.GameAddress = address.game
+      // state.GameAddress = address.game
     },
     updateDefiContract(state, address) {
       state.DefiAddress = address
