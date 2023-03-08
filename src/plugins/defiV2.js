@@ -412,6 +412,16 @@ export default class DefiV2 {
     return this.sendTransaction(data.encodeABI())
   }
 
+  async isController(walletAddress) {
+    const result = await this.contract.methods.isController(walletAddress).call();
+    return result;
+  }
+
+  async setController(walletAddress) {
+    const data = await this.contract.methods.setController(walletAddress)
+    return this.sendTransaction(data.encodeABI())
+  }
+
   async sendTransaction(data, value) {
     let web3;
     if (value) {

@@ -53,6 +53,30 @@
         </div>
       </v-col>
     </v-row>
+
+    <v-row>
+      <v-col cols="7">
+        <v-text-field
+          label="檢查controller資訊"
+          single-line
+          outline
+          v-model="controller"
+        >
+        </v-text-field>
+        <v-btn @click="checkController" class="ml-1" :loading="!isLoaded"> Check </v-btn>
+      </v-col>
+    </v-row>
+
+    <v-row v-if="showControllerDetail">
+      <v-col cols="12">
+        <div>
+          <div>account address: {{ controller }}</div>
+          <v-btn @click="setController">
+            {{ accountIsController ? '將此 account 取消 Controller 權限' : '將此 account 設定為 Controller'}}
+          </v-btn>
+        </div>
+      </v-col>
+    </v-row>
   </v-container>
 </template>
 <script>
@@ -73,6 +97,10 @@ export default {
       contract: {},
       isLoaded: true,
       account: '',
+
+      controller: '',
+      showControllerDetail: false,
+      accountIsController: false,
 
       showDetail: false,
       accountIsInWhiteList: false,
@@ -133,6 +161,34 @@ export default {
       }
       this.isLoaded = true
       await this.check()
+    },
+    async checkController() {
+      if (!this.controller) {
+        this.$toasted.error('account is empty')
+        return
+      }
+      this.isLoaded = false
+      this.showControllerDetail = false
+      try {
+        this.accountIsController = await this.contract[
+          this.usedToken
+        ].isController(this.controller)
+        this.showControllerDetail = true
+      } catch (error) {
+        this.$toasted.error(error.message)
+      }
+      this.isLoaded = true
+    },
+    async setController() {
+      try {
+        this.isLoaded = false
+        await this.contract[this.usedToken].setController(this.controller)        
+      } catch (error) {
+        this.$toasted.error(error.message)
+        console.error(error)
+      }
+      this.isLoaded = true
+      await this.checkController()
     },
   },
 }
