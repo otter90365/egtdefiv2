@@ -20,11 +20,11 @@
               <h2 :class="`primary_${$route.params.token}--text`">{{ claimAmount }}</h2>
               <btn :buttonText="`${$t('claim')} ${$route.params.token.toUpperCase()}`" :color="`primary_${$route.params.token}`" :width="200" :isDisabled="claimAmount===0" @clickBtn="claim()"></btn>
             </v-col>
-            <v-col cols="12" sm="6" class="d-flex flex-column justify-center align-center mb-5" v-for="(token, i) in tokenList" :key="i">
+            <!--<v-col cols="12" sm="6" class="d-flex flex-column justify-center align-center mb-5" v-for="(token, i) in tokenList" :key="i">
               <div>{{ token.name.toUpperCase() }} {{ $t('claimable') }}</div>
               <h2 :class="`primary_${$route.params.token}--text`">{{ token.claimable }}</h2>
               <btn :buttonText="`${$t('claim')} ${token.name.toUpperCase()}`" :color="`primary_${$route.params.token}`" :width="200" :isDisabled="token.claimable===0" @clickBtn="claimMortgage(token, i)"></btn>
-            </v-col>
+            </v-col>-->
           </v-row>
 
           <div class="px-5 mb-10" style='width: 100%;'>
@@ -117,16 +117,16 @@ export default {
       this.balance = result.balance
       this.claimAmount = result.claimable
     },
-    async getMortgageAmount(){
-      let tokenList = JSON.parse(JSON.stringify(this.$store.state.tokenList))
-      // console.log('this.balance', this.balance)
-      for (let i=0; i<tokenList.length; i++){
-        let result = await this.adtContract.getMortgageAmount(this.$store.state.account, tokenList[i].tokenaddress)
-        // console.log('result', result)
-        tokenList[i].claimable = result
-      }
-      this.tokenList = tokenList
-    }
+    // async getMortgageAmount(){
+    //   let tokenList = JSON.parse(JSON.stringify(this.$store.state.tokenList))
+    //   // console.log('this.balance', this.balance)
+    //   for (let i=0; i<tokenList.length; i++){
+    //     let result = await this.adtContract.getMortgageAmount(this.$store.state.account, tokenList[i].tokenaddress)
+    //     // console.log('result', result)
+    //     tokenList[i].claimable = result
+    //   }
+    //   this.tokenList = tokenList
+    // }
   },
   async mounted(){
     // defi contract
@@ -138,7 +138,7 @@ export default {
       this.adtContract = await new ADT()
       try{
         await this.getAmount()
-        await this.getMortgageAmount()
+        // await this.getMortgageAmount()
         this.loadingShow = false
       }catch(error){
         this.loadingShow = false
