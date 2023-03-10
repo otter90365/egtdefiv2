@@ -39,6 +39,7 @@ export default new Vuex.Store({
     nowWidth: 0,
     registryOpen: false,
     locationWarning: true,
+    rpcUrl: '',
   },
   mutations: {
     updateDisclaimerIsShow(state) {
@@ -105,6 +106,9 @@ export default new Vuex.Store({
     updateLocationWarning(state, locationWarning) {
       state.locationWarning = locationWarning
     },
+    updateRpcUrl(state, rpcUrl) {
+      state.rpcUrl = rpcUrl
+    }
   },
   getters: {
     disclaimerIsShow(state) {
@@ -149,6 +153,19 @@ export default new Vuex.Store({
         console.log('error', error)
       }
       commit('updateDefiV2Contract', state.currToken === 'usdt' ? USDTPageConfig.defiContract : TBTPageConfig.defiContract)
+    },
+    async getRpcUrl({ commit }) {
+      try {
+        let result = await Vue.axios.get(`https://defi-v2.api-absolute-uv.com/api/v1/url`)
+        if (result.data.status === 200) {
+          commit('updateRpcUrl', result.data.data)
+        } else {
+          commit('updateRpcUrl', 'https://bsc-dataseed.binance.org')
+        }
+      } catch (error) {
+        commit('updateRpcUrl', 'https://bsc-dataseed.binance.org')
+        console.log('error', error)
+      }
     },
   },
   modules: {

@@ -1,13 +1,12 @@
 // register the plugin on vue
 import ABI from '@/assets/abi/egt.js'
 import store from '../store'
-import { rpcURL } from '@/assets/contract.js'
 const Web3 = require("web3");
 const Contract = require('web3-eth-contract');
-Contract.setProvider(rpcURL);
 
 export default class bscEth {
   constructor() {
+    Contract.setProvider(store.state.rpcUrl);
     // this.contract = new Contract(ABI, store.state.EGTAddress);
     this.contract = new Contract(ABI, store.state.ETHAddress);
     // console.log('this.contract', this.contract)
@@ -36,7 +35,7 @@ export default class bscEth {
   async sendTransaction(data, value){
     let web3
     if (value){
-      web3 = await new Web3(new Web3.providers.HttpProvider(rpcURL));
+      web3 = await new Web3(new Web3.providers.HttpProvider(store.state.rpcUrl));
     }
     const transactionParameters = {
       to: store.state.ETHAddress,

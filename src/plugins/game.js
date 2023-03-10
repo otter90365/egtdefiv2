@@ -1,12 +1,11 @@
 // register the plugin on vue
 import ABI from '@/assets/abi/game.js'
 import store from '../store'
-import { rpcURL } from '@/assets/contract.js'
 const Contract = require('web3-eth-contract');
-Contract.setProvider(rpcURL);
 
 export default class Game {
   constructor() {
+    Contract.setProvider(store.state.rpcUrl);
     this.contract = new Contract(ABI, store.state.GameAddress);
     // console.log('this.contract', this.contract)
   }

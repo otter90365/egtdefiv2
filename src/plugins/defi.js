@@ -1,15 +1,14 @@
 // register the plugin on vue
 import ABI from '@/assets/abi/defi.js';
 import store from '../store';
-import { rpcURL } from '@/assets/contract.js';
 const Contract = require('web3-eth-contract');
 const Web3 = require("web3");
-Contract.setProvider(rpcURL);
 
 export default class Defi {
   constructor () {
+    Contract.setProvider(store.state.rpcUrl);
     this.contract = new Contract(ABI, store.state.DefiAddress);
-    this.web3 = new Web3(new Web3.providers.HttpProvider(rpcURL));
+    this.web3 = new Web3(new Web3.providers.HttpProvider(store.state.rpcUrl));
     // console.log('this.contract', this.contract)
   }
 
@@ -419,7 +418,7 @@ export default class Defi {
   async sendTransaction(data, value) {
     let web3;
     if (value) {
-      web3 = await new Web3(new Web3.providers.HttpProvider(rpcURL));
+      web3 = await new Web3(new Web3.providers.HttpProvider(store.state.rpcUrl));
     }
     const transactionParameters = {
       to: store.state.DefiAddress,

@@ -1,14 +1,14 @@
 // register the plugin on vue
 import ABI from '@/assets/abi/usdt.js'
 import store from '../store'
-import { USDTAddress, rpcURL } from '@/assets/contract.js'
+import { USDTAddress } from '@/assets/contract.js'
 const Contract = require('web3-eth-contract');
-Contract.setProvider(rpcURL);
 /**
  * @deprecated
  */
 export default class USDT {
   constructor(defiContractAddress = 2) {
+    Contract.setProvider(store.state.rpcUrl);
     this.defiContractAddress = defiContractAddress
     this.contract = new Contract(ABI, USDTAddress);
     // console.log('this.contract', this.contract)

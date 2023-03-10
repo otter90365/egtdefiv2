@@ -1,7 +1,6 @@
 // register the plugin on vue
 import ABI_V2 from '@/assets/abi/defiv2.js';
 import store from '../store';
-import { rpcURL } from '@/assets/contract.js';
 
 import range from 'lodash/range';
 import indexOf from 'lodash/indexOf'
@@ -9,13 +8,13 @@ import { newOrderStartIndex } from '@/constant/order';
 
 const Contract = require('web3-eth-contract');
 const Web3 = require("web3");
-Contract.setProvider(rpcURL);
 
 export default class DefiV2 {
   constructor (contractAddress = store.state.Defi2Address) {
+    Contract.setProvider(store.state.rpcUrl);
     this.contractAddress = contractAddress
     this.contract = new Contract(ABI_V2, contractAddress);
-    this.web3 = new Web3(new Web3.providers.HttpProvider(rpcURL));
+    this.web3 = new Web3(new Web3.providers.HttpProvider(store.state.rpcUrl));
   }
 
   /**
@@ -422,7 +421,7 @@ export default class DefiV2 {
   async sendTransaction(data, value) {
     let web3;
     if (value) {
-      web3 = await new Web3(new Web3.providers.HttpProvider(rpcURL));
+      web3 = await new Web3(new Web3.providers.HttpProvider(store.state.rpcUrl));
     }
     const transactionParameters = {
       to: this.contractAddress,

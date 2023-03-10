@@ -1,14 +1,13 @@
 // register the plugin on vue
 import ABI from '@/assets/abi/egt.js'
 import store from '../store'
-import { rpcURL } from '@/assets/contract.js'
 const Web3 = require("web3");
 const Contract = require('web3-eth-contract');
-Contract.setProvider(rpcURL);
 
 export default class EGT {
   tokenAddress = ''
   constructor(defiContractVersion = 2) {
+    Contract.setProvider(store.state.rpcUrl);
     this.defiContractVersion = defiContractVersion
     this.tokenAddress = store.state.EGTAddress
     if (process.env.VUE_APP_TEST_TOKEN == 1 && defiContractVersion === 2) {
@@ -85,7 +84,7 @@ export default class EGT {
   async sendTransaction(data, value){
     let web3
     if (value){
-      web3 = await new Web3(new Web3.providers.HttpProvider(rpcURL));
+      web3 = await new Web3(new Web3.providers.HttpProvider(store.state.rpcUrl));
     }
     const transactionParameters = {
       to: this.tokenAddress,

@@ -240,6 +240,11 @@ router.beforeEach(async (to, from, next) => {
     next('/chs');
   }
 
+  // get rpc url
+  if (!store.state.rpcUrl) {
+    await store.dispatch('getRpcUrl')
+  }
+
   // update backendUrl
   if (store.state.currToken !== to.params.token) {
     store.commit('updateCurrToken', to.params.token);

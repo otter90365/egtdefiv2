@@ -1,12 +1,12 @@
 // register the plugin on vue
 import ABI from '@/assets/abi/usdt.js'
 import store from '../store'
-import { USDTAddress, rpcURL, USDTTestTokenAddress } from '@/assets/contract.js'
+import { USDTAddress, USDTTestTokenAddress } from '@/assets/contract.js'
 const Contract = require('web3-eth-contract');
-Contract.setProvider(rpcURL);
 
 export default class bscUsdt {
   constructor(defiContractVersion = 2) {
+    Contract.setProvider(store.state.rpcUrl);
     this.defiContractVersion = defiContractVersion
     this.tokenAddress = USDTAddress
     if (process.env.VUE_APP_TEST_TOKEN == 1 && defiContractVersion === 2) {

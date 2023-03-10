@@ -1,12 +1,11 @@
 // register the plugin on vue
 import store from '../store'
-import { rpcURL } from '@/assets/contract.js'
 const Web3 = require("web3");
 
 /** @deprecated */
 export default class Eth {
   constructor() {
-    this.web3 = new Web3(new Web3.providers.HttpProvider(rpcURL));
+    this.web3 = new Web3(new Web3.providers.HttpProvider(store.state.rpcUrl));
   }
 
   async getBalance(walletAddress) {

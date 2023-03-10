@@ -1,12 +1,12 @@
 // register the plugin on vue
 import ABI from '@/assets/abi/usdt.js'
 import store from '../store'
-import { TBTAddress, rpcURL, TBTTestTokenAddress } from '@/assets/contract.js'
+import { TBTAddress, TBTTestTokenAddress } from '@/assets/contract.js'
 const Contract = require('web3-eth-contract');
-Contract.setProvider(rpcURL);
 
 export default class bscTbt {
   constructor(defiContractVersion = 2) {
+    Contract.setProvider(store.state.rpcUrl);
     this.defiContractVersion = defiContractVersion
     this.tokenAddress = TBTAddress
     if (process.env.VUE_APP_TEST_TOKEN == 1 && defiContractVersion == 2) {
