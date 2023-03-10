@@ -38,6 +38,7 @@ export default new Vuex.Store({
     currToken: '',
     nowWidth: 0,
     registryOpen: false,
+    locationWarning: true,
   },
   mutations: {
     updateDisclaimerIsShow(state) {
@@ -100,7 +101,10 @@ export default new Vuex.Store({
     },
     updateRegistryOpen(state, isOpen) {
       state.registryOpen = isOpen
-    }
+    },
+    updateLocationWarning(state, locationWarning) {
+      state.locationWarning = locationWarning
+    },
   },
   getters: {
     disclaimerIsShow(state) {

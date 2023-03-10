@@ -41,6 +41,19 @@
     >
       <router-view name="toolbar" />
     </div>
+
+    <v-dialog persistent v-model="$store.state.locationWarning" :max-width="locationWarningDetails ? 691 : 435" width="95%">
+      <v-card class="pt-11 pb-7" v-if="!locationWarningDetails">
+        <div class="rem-20 font-weight-black text-center px-5 mb-10" style="white-space: pre-wrap;">{{ $t('notForTaiwan') }}</div>
+        <v-btn class="mx-auto d-block mb-3" color="#00A77B" min-width="150" depressed dark style="border-radius: 25px" @click="locationWarningDetails=true">{{ $t('toDetails') }}</v-btn>
+        <v-btn class="mx-auto d-block" color="#878788" min-width="150" depressed dark style="border-radius: 25px" @click="$store.commit('updateLocationWarning', false)">{{ $t('close') }}</v-btn>
+      </v-card>
+      <v-card class="pt-md-11 pt-7 pb-md-7 pb-4 px-md-11 px-4" v-else>
+        <div class="rem-20 font-weight-black text-center mb-md-11 mb-4" style="color: #5A0A98;">{{ $t('notForTaiwan') }}</div>
+        <div class="rem-8 mb-md-8 mb-4" style="color: #818181; white-space: pre-wrap;">{{ $t('notForTaiwanContent') }}</div>
+        <v-btn class="mx-auto d-block mb-3" color="#00A77B" min-width="150" depressed dark style="border-radius: 25px" @click="$store.commit('updateLocationWarning', false)">{{ $t('close') }}</v-btn>
+      </v-card>
+    </v-dialog>
   </v-app>
 </template>
 
@@ -52,6 +65,7 @@ export default {
   mixins: [base, accountActionMixin],
   data: () => ({
     drawer: null,
+    locationWarningDetails: false,
   }),
   async mounted() {
     // console.log('==========default==========')
