@@ -307,6 +307,7 @@ export default {
       ])
       this.currOrdersDetail = result.flat()
       console.log(result)
+      this.currOrdersDetail.sort((a, b) => b.startday - a.startday)
     },
     async clickBtn(order) {
       if (this.$store.state.chainId) {

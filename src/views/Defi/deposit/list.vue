@@ -291,6 +291,7 @@ export default {
 
         this.orders = [...afterMortgage, ...this.orders]
         console.log(this.orders)
+        this.orders.sort((a, b) => b.startday - a.startday)
       } catch (error) {
         console.error(error)
       }

@@ -186,6 +186,7 @@ export default {
         })
         .flat()
       this.allOrders = [...dictWithGroupOrders2, ...dictWithGroupOrders]
+      this.allOrders.sort((a, b) => b.filledTime - a.filledTime)
       if (this.allOrders.length === 0) {
         return (this.currOrdersDetail = [])
       }
@@ -234,6 +235,8 @@ export default {
         .sort((a, b) => {
           return a.sorterId - b.sorterId
         })
+
+      this.currOrdersDetail.sort((a, b) => b.filledTime - a.filledTime)
     },
     async take(order) {
       if (this.$store.state.chainId) {
