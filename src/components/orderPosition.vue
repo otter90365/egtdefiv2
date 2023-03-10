@@ -232,6 +232,7 @@ export default {
       this.rate = null
       this.value = null
       this.getToken()
+      this.getNow()
     },
     'data.settleday'(newVal) {
       if (newVal) {

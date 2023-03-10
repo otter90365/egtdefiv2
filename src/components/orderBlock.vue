@@ -131,6 +131,7 @@ export default {
       this.rate = null
       this.value = null
       this.getToken()
+      this.getNow()
     },
     "data.filledTime"(newVal){
       if (newVal){
