@@ -181,18 +181,20 @@ export default {
         {{ isMember? $t('enabled'): $t('disabled') }}
       </div>
       <div class="d-flex logo-wrap d-md-none align-center">
-        <v-img alt="Edt-Logo"
-          class="shrink mr-0 mr-md-2"
-          contain
-          src="@/assets/img/logo-egtdefi.png"
-          transition="scale-transition"
-          :height="$store.state.nowWidth > 960 ? 60 : 30"
-          @click="toMain()" />
-        <span class="d-flex flex-column">
-          <span class="rem-1">Absolute DEFI</span>
-          <span class="rem-2"
-            style="white-space: nowrap">{{ $t('cryptoLendingPlatform') }}</span>
-        </span>
+        <div class="d-flex align-center can-click ml-2" @click="toMain()">
+          <!--<v-img
+            alt="Edt-Logo"
+            class="shrink mr-0 mr-md-2"
+            contain
+            src="@/assets/img/logo-egtdefi.png"
+            transition="scale-transition"
+            :height="$store.state.nowWidth > 960 ? 60 : 30"
+          />-->
+          <span class="d-flex flex-column font-weight-regular">
+            <span class="rem-2 font-weight-black">DEFI<span class="font-weight-regular ml-1" style="font-size: 10px;">Smart Contract</span></span>
+            <span style="font-size: 10px;">{{ $t('cryptoLendingPlatform') }}</span></span
+          >
+        </div>
         <v-spacer />
         <div class="d-flex d-md-none"
           style="margin-left: auto">

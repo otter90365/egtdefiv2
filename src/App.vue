@@ -10,8 +10,8 @@
       class="pl-12 pt-12"
     >
       <div class="d-flex flex-column" style="height: 100%">
-        <div class="d-flex align-center">
-          <v-img
+        <div class="d-flex align-center can-click" @click="toMain()">
+          <!--<v-img
             alt="Edt-Logo"
             class="shrink mr-0 mr-md-2 can-click"
             contain
@@ -19,12 +19,13 @@
             transition="scale-transition"
             :height="60"
             @click="toMain()"
-          />
+          />-->
           <span
             style="color: #4D4D4D"
             class="d-flex flex-column font-weight-regular"
-            ><span class="rem-2">Absolute DEFI</span
-            ><span class="rem-7">{{ $t('cryptoLendingPlatform') }}</span></span
+          >
+            <span class="rem-12 font-weight-black">DEFI<span class="rem-5 font-weight-regular ml-2">Smart Contract</span></span>
+            <span class="rem-5">{{ $t('cryptoLendingPlatform') }}</span></span
           >
         </div>
         <router-view name="sidenav" />

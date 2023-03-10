@@ -275,11 +275,11 @@ export default {
   enterWantedSwapAmount:
     'Please enter the amount of {tokenName} you want to swap',
   sideNavSubTitle: [
-    'Absolute provides multiple tools for asset management,',
+    'DEFI provides multiple tools for asset management,',
     'helping you find the best way to manage your assets.',
   ],
   disclaimerContent: [
-    'Absolute DEFI (collectively, the “Services”) solely serves as a matchmaking platform for suppliers and borrowers. Given the information pertaining to collateralized loans on the Services is decided and published by suppliers and borrowers, any related liability and contract shall only be assumed and enforced by both suppliers and borrowers. If any controversy and dispute arise, suppliers and borrowers shall be liable for resolving the controversy and dispute. Therefore, the Services shall not be responsible for any controversy and dispute and will not resolve and intervene in any controversy and dispute.',
+    'DEFI (collectively, the “Services”) solely serves as a matchmaking platform for suppliers and borrowers. Given the information pertaining to collateralized loans on the Services is decided and published by suppliers and borrowers, any related liability and contract shall only be assumed and enforced by both suppliers and borrowers. If any controversy and dispute arise, suppliers and borrowers shall be liable for resolving the controversy and dispute. Therefore, the Services shall not be responsible for any controversy and dispute and will not resolve and intervene in any controversy and dispute.',
     'Some fundraising groups on social media, recently formed by some borrowers and publicly soliciting funding, have no relation with the Services. If any dispute and controversy arise, the borrowers shall bear all the responsibility and resolve the dispute and controversy. Also, note that stakeholders shall evaluate the identity of the borrowers thereof, which will be at your own risk.',
     'You acknowledge and agree that you will access and use the Services, including, without limitation, our websites (for laptop and mobile), applications, database system and our other related programmed services. The Services are provided on an "as is" and "as available" basis. We reserve the right to modify or update the Services at any time. We shall not be liable for any damages or losses caused by temporary suspension of services or suspension of transactions during modifying or updating the Services. We shall not compensate users for all the damages or losses under the circumstances mentioned above.',
     'Please note that in order to ensure the rights and benefits of our members, the users shall observe the Terms of Services. If you have any questions, please feel free to contact us.',
