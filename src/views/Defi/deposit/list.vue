@@ -9,8 +9,8 @@
           <noRecord v-if="currOrders.length === 0"></noRecord>
           <Fragment v-else>
             <orderBlock
-              v-for="order in currOrders"
-              :key="(`${order.sorterId} ${order.token}`)"
+              v-for="(order, i) in currOrders"
+              :key="(`${order.sorterId} ${order.token} ${i}`)"
               :data="order"
               buttonText="invest"
               :isLock="lockCheck(order)"
@@ -279,7 +279,7 @@ export default {
           orders
             .flat()
             .sort((a, b) => {
-              return parseInt(a.sorterId) - parseInt(b.sorterId)
+              return parseInt(b.startday) - parseInt(a.startday)
             })
             .map((item) => {
               return this.getMortgage(item, false).then((rate) => ({
