@@ -58,14 +58,11 @@ export default class Defi {
 
   // 建立 erc 訂單
   async ercorder(loan, tokenAddress) {
-    let want = loan.amount * 10 ** 18;
-    let amount = loan.egtAmount * 10 ** 18;
-    let rate = loan.interest * 10 ** 16;
+    const wantString = this.web3.utils.toWei(loan.amount.toString())
+    const amountString = this.web3.utils.toWei(loan.egtAmount.toString())
+    const rateString = this.web3.utils.toWei((loan.interest / 100).toString())
     let lendday = loan.date;
 
-    const wantString = want.toLocaleString('fullwide', { useGrouping: false });
-    const amountString = amount.toLocaleString('fullwide', { useGrouping: false });
-    const rateString = rate.toLocaleString('fullwide', { useGrouping: false });
     let extraData = await this.contract.methods.ercorder(tokenAddress, wantString, amountString, rateString, lendday);
     let data = extraData.encodeABI();
     return this.sendTransaction(data);

@@ -48,17 +48,15 @@ export default class ERC {
   }
 
   async buy(amount){
-    const num = amount * 10 ** 18;
-    const numString = num.toLocaleString('fullwide', {useGrouping:false})
+    const amountString = this.web3.utils.toWei(amount.toString())
     let extraData = await this.contract.methods.buy()
     let data = extraData.encodeABI()
-    return this.sendTransaction(data, numString)
+    return this.sendTransaction(data, amountString)
   }
 
   async sell(amount){
-    const num = amount * 10 ** 18;
-    const numString = num.toLocaleString('fullwide', {useGrouping:false})
-    let extraData = await this.contract.methods.sell(numString)
+    const amountString = this.web3.utils.toWei(amount.toString())
+    let extraData = await this.contract.methods.sell(amountString)
     let data = extraData.encodeABI()
     return this.sendTransaction(data)
   }

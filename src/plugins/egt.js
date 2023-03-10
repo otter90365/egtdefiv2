@@ -50,17 +50,15 @@ export default class EGT {
   }
 
   async buy(amount){
-    const num = amount * 10 ** 18;
-    const numString = num.toLocaleString('fullwide', {useGrouping:false})
-    let extraData = await this.contract.methods.buy(numString)
+    const amountString = this.web3.utils.toWei(amount.toString())
+    let extraData = await this.contract.methods.buy(amountString)
     let data = extraData.encodeABI()
     return this.sendTransaction(data)
   }
 
   async sell(amount){
-    const num = amount * 10 ** 18;
-    const numString = num.toLocaleString('fullwide', {useGrouping:false})
-    let extraData = await this.contract.methods.sell(numString)
+    const amountString = this.web3.utils.toWei(amount.toString())
+    let extraData = await this.contract.methods.sell(amountString)
     let data = extraData.encodeABI()
     return this.sendTransaction(data)
   }

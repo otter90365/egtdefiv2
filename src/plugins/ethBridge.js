@@ -11,8 +11,7 @@ export default class EthBridge {
   }
 
   async withdraw(payload){
-    let amount = payload.amount * 10 ** 18
-    const amountString = amount.toLocaleString('fullwide', {useGrouping:false})
+    const amountString = this.web3.utils.toWei(payload.amount.toString())
     let extraData =  await this.contract.methods.Withdraw(payload.sendAddress, amountString)
     let data = extraData.encodeABI()
     return this.sendTransaction(data)

@@ -61,8 +61,7 @@ export default class Game {
   }
   
   async addMoney(amount){
-    let num = amount * 10 ** 18
-    const amountString = num.toLocaleString('fullwide', {useGrouping:false})
+    const amountString = this.web3.utils.toWei(amount.toString())
     let extraData = await this.contract.methods.addpool(amountString)
     let data = extraData.encodeABI()
     return this.sendTransaction(data)

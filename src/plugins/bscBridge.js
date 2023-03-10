@@ -11,8 +11,7 @@ export default class BscBridge {
   }
 
   async deposit(amount){
-    amount = amount * 10 ** 18
-    const amountString = amount.toLocaleString('fullwide', {useGrouping:false})
+    const amountString = this.web3.utils.toWei(amount.toString())
     let extraData =  await this.contract.methods.Deposit(amountString)
     let data = extraData.encodeABI()
     return this.sendTransaction(data)
