@@ -55,11 +55,13 @@
           @click="toLink(card.token)"
         >
           <logo
+            v-if="card.token === 'usdt'"
             class="mb-md-5 mb-4"
             :name="card.token"
             :background="card.logoBg"
             :img="`icon-${card.token}-text.png`"
           ></logo>
+          <img v-else class="mb-md-5 mb-4" src="@/assets/img/icon-tbt.svg" alt="" width="90px" height="90px">
           <strong class="rem-md-18 rem-9 white--text">
             {{ $t('investAmount') }}
           </strong>
