@@ -36,7 +36,7 @@ const routes = [
       default: () => import('../DefiLayout.vue'),
       header: () => import('../layout/header/defiHeader.vue'),
       sidenav: () => import('../layout/sideNav/defiSideNav.vue'),
-      toolbar: () => import('../layout/toolbar/defiToolbar.vue'),
+      // toolbar: () => import('../layout/toolbar/defiToolbar.vue'),
     },
     children: [
       {
