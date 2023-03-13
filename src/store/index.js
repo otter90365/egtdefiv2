@@ -2,7 +2,6 @@ import Vue from 'vue'
 import Vuex from 'vuex'
 import axios from 'axios'
 import VueAxios from 'vue-axios'
-import { TBTPageConfig, USDTPageConfig } from '@/assets/contract'
 import keyBy from 'lodash/keyBy'
 import { COIN_GECKO_API_KEY } from '@/constant/coingecko'
 
@@ -160,6 +159,7 @@ export default new Vuex.Store({
         if (result.data.status === 200) {
           commit('updateRpcUrl', result.data.data.url)
           commit('updateDefiContract', state.currToken === 'usdt' ? result.data.data.usdt_v1 : result.data.data.tbt_v1)
+          commit('updateDefiV2Contract', state.currToken === 'usdt' ? result.data.data.usdt_v2 : result.data.data.tbt_v2)
         } else {
           commit('updateRpcUrl', 'https://bsc-dataseed.binance.org')
         }
@@ -167,8 +167,6 @@ export default new Vuex.Store({
         commit('updateRpcUrl', 'https://bsc-dataseed.binance.org')
         console.log('error', error)
       }
-
-      commit('updateDefiV2Contract', state.currToken === 'usdt' ? USDTPageConfig.defiContract : TBTPageConfig.defiContract)
     },
   },
   modules: {
