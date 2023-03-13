@@ -142,23 +142,24 @@ export default new Vuex.Store({
       let result = await Vue.axios.get(`https://api.etherscan.io/api?module=account&action=txlist&&address=${data.defiAddress}&startblock=${data.startBlock}&endblock=${data.endBlock}&page=${data.page}&apikey=C9RIE4CZZGHNE7FICYK8FWWUC2MP8WAR86`)
       return result.data
     },
-    async getDefiContract({ getters, commit, state }) {
-      try {
-        let result = await Vue.axios.get(`${getters.backendUrl}/api/v1/defi_contract`)
-        // console.log('defi contract result', result)
-        if (result.data.status === 200) {
-          commit('updateDefiContract', result.data.data)
-        }
-      } catch (error) {
-        console.log('error', error)
-      }
-      commit('updateDefiV2Contract', state.currToken === 'usdt' ? USDTPageConfig.defiContract : TBTPageConfig.defiContract)
-    },
-    async getRpcUrl({ commit }) {
+    // async getDefiContract({ getters, commit, state }) {
+    //   try {
+    //     let result = await Vue.axios.get(`${getters.backendUrl}/api/v1/defi_contract`)
+    //     // console.log('defi contract result', result)
+    //     if (result.data.status === 200) {
+    //       commit('updateDefiContract', result.data.data)
+    //     }
+    //   } catch (error) {
+    //     console.log('error', error)
+    //   }
+    //   commit('updateDefiV2Contract', state.currToken === 'usdt' ? USDTPageConfig.defiContract : TBTPageConfig.defiContract)
+    // },
+    async getRpcUrl({ state, commit }) {
       try {
         let result = await Vue.axios.get(`https://defi-v2.api-absolute-uv.com/api/v1/url`)
         if (result.data.status === 200) {
-          commit('updateRpcUrl', result.data.data)
+          commit('updateRpcUrl', result.data.data.url)
+          commit('updateDefiContract', state.currToken === 'usdt' ? result.data.data.usdt_v1 : result.data.data.tbt_v1)
         } else {
           commit('updateRpcUrl', 'https://bsc-dataseed.binance.org')
         }
@@ -166,6 +167,8 @@ export default new Vuex.Store({
         commit('updateRpcUrl', 'https://bsc-dataseed.binance.org')
         console.log('error', error)
       }
+
+      commit('updateDefiV2Contract', state.currToken === 'usdt' ? USDTPageConfig.defiContract : TBTPageConfig.defiContract)
     },
   },
   modules: {

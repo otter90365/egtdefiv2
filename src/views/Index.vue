@@ -179,7 +179,7 @@ export default {
     async getTotalAmount() {
       try {
         await this.$store.commit('updateCurrToken', 'usdt');
-        await this.$store.dispatch('getDefiContract');
+        await this.$store.dispatch('getRpcUrl');
         this.defiContract = new Defi();
         this.defiContract2 = new DefiV2()
 
@@ -192,7 +192,7 @@ export default {
       }
       try {
         await this.$store.commit('updateCurrToken', 'tbt');
-        await this.$store.dispatch('getDefiContract');
+        await this.$store.dispatch('getRpcUrl');
 
         this.defiContract = new Defi();
         this.defiContract2 = new DefiV2()
