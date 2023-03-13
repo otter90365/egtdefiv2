@@ -38,7 +38,7 @@ export default new Vuex.Store({
     currToken: '',
     nowWidth: 0,
     registryOpen: false,
-    locationWarning: true,
+    locationWarning: false,
     rpcUrl: '',
   },
   mutations: {
