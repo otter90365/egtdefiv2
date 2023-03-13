@@ -106,8 +106,8 @@
         <div class="text-green">
           {{
             (mode === 'loan'
-              ? (data.want * data.rate) / 100
-              : (data.want * data.rate) / 100 / 2) | numberFormat
+              ? ((data.want * data.rate) / 100).toFixed(2)
+              : ((data.want * data.rate) / 100 / 2).toFixed(2)) | numberFormat
           }}
         </div>
       </v-col>

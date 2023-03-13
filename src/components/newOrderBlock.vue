@@ -308,8 +308,8 @@ export default {
         <div class="value text-green">
           {{
             (isLender
-              ? (data.want * data.rate) / 100
-              : (data.want * data.rate) / 100 / 2) | numberFormat
+              ? ((data.want * data.rate) / 100).toFixed(2)
+              : ((data.want * data.rate) / 100 / 2).toFixed(2)) | numberFormat
           }}
         </div>
       </span>
