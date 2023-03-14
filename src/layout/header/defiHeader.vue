@@ -157,6 +157,13 @@ export default {
         this.lastRoute = routeName
       }
     },
+    changeHeaderType() {
+      if (this.lastRoute.includes('deposit')) {
+        this.$router.push({name: 'Defi-borrow-create'})
+      } else {
+        this.$router.push({name: 'Defi-deposit-list'})
+      }
+    }
   },
 }
 </script>
@@ -210,9 +217,12 @@ export default {
         </div>
       </div>
       <div class="header-wrapper">
-        <strong class="d-block d-md-none route-name">{{
-          $t(nameDir[lastRoute])
-        }}</strong>
+        <div class="d-block d-md-none route-name can-click" @click="changeHeaderType()">
+          <strong class="mr-1">{{
+            $t(nameDir[lastRoute])
+          }}</strong>
+          <img src="@/assets/img/icon-switch.svg" alt="">
+        </div>
         <DefiNav :items="items"
           :active="lastRoute" />
         <div class="d-none d-md-flex">
