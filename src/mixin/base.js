@@ -71,7 +71,7 @@ export default {
         if (roundTo !== undefined){
           result = Number.isInteger(num) ? num : (num).toFixed(roundTo)
         }else{
-          result = Number.isInteger(num) ? num : (num).toFixed(2)
+          result = Number.isInteger(num) ? num : Math.round(num * 100) / 100
         }
         return result
       }else{
