@@ -235,8 +235,22 @@ export default {
         .sort((a, b) => {
           return a.sorterId - b.sorterId
         })
-
-      this.currOrdersDetail.sort((a, b) => b.filledTime - a.filledTime)
+      
+      let frontList = []
+      let lastList = []
+      const now = Math.floor(Date.now())
+      this.currOrdersDetail.forEach(item => {
+        if (item.isComplete || (!item.isComplete && now / 3600000 > item.filledTime + item.settleday + BREACH_BUFFER_HOUR)) {
+          // repay, isCancel, breach => filledTime 排序 (如果沒有就 startday)(放後面)
+          lastList.push(item)
+        } else {
+          // buffer, loaning => filledTime + settleday 排序 (放前面)
+          frontList.push(item)
+        }
+      })
+      lastList.sort((a, b) => (b.filledTime || b.startday) - (a.filledTime || a.startday))
+      frontList.sort((a, b) => (a.filledTime + a.settleday) - (b.filledTime + b.settleday))
+      this.currOrdersDetail = [...frontList, ...lastList]
     },
     async take(order) {
       if (this.$store.state.chainId) {
