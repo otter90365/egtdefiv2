@@ -1,9 +1,9 @@
 export const depositRouteHeader = [
   {
-    text: 'createLoan',
-    navText: 'createLoanNav',
-    routeName: 'Defi-borrow-create',
-    link: { name: 'Defi-borrow-create' }
+    text: 'orderList',
+    navText: 'orderListNav',
+    routeName: 'Defi-deposit-list',
+    link: { name: 'Defi-deposit-list' },
   },
   {
     text: 'myDeposit',
@@ -21,10 +21,10 @@ export const depositRouteHeader = [
 
 export const borrowRouteHeader = [
   {
-    text: 'orderList',
-    navText: 'orderListNav',
-    routeName: 'Defi-deposit-list',
-    link: { name: 'Defi-deposit-list' },
+    text: 'createLoan',
+    navText: 'createLoanNav',
+    routeName: 'Defi-borrow-create',
+    link: { name: 'Defi-borrow-create' }
   },
   {
     text: 'headerMyLoan',
