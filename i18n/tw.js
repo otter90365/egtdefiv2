@@ -71,7 +71,7 @@ export default {
   registryBorrow: '貸款前須先註冊',
   registryDeposit: '投資前須先註冊',
   serviceRegistry: '啟用您的服務',
-  enterReferer: '請填寫推薦人的地址',
+  enterReferer: '請填寫地址以啟用服務',
   enterRefererPlaceHolder: '請輸入推薦人的地址',
   yoursReceiveAddress: '您的收款地址',
   notInWhiteList: '您尚未擁有投單資格，請洽詢聯絡窗口',
