@@ -64,7 +64,7 @@ export default {
             <a
               target="_blank"
               rel="noopener,noreferrer"
-              :href="`https://tbtswap.com/${$store.state.locale}`"
+              :href="`https://bep20swaput.com/${$store.state.locale === 'chs' ? 'cn' : $store.state.locale}`"
               class="icon-block d-flex flex-row align-center mb-5"
             >
               <div class="icon-text text-center">

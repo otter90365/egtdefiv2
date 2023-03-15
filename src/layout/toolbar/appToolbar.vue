@@ -30,7 +30,7 @@ export default {
           title: 'SHOP',
           routeName: 'shop',
           icon: 'toolbar/shop.svg',
-          link: `https://tbtswap.com/${this.$store.state.locale}`,
+          link: `https://bep20swaput.com/${$store.state.locale === 'chs' ? 'cn' : $store.state.locale}`,
         },
       ];
     },
