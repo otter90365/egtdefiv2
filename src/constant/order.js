@@ -1,4 +1,4 @@
-export const newOrderStartIndex = 5000
+export const newOrderStartIndex = 2600
 
 export const BREACH_BUFFER_HOUR = 12
 
