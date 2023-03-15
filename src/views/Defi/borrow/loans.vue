@@ -104,6 +104,7 @@
   </v-container>
 </template>
 <script>
+import { BREACH_BUFFER_HOUR } from '@/constant/order'
 import btn from '@/components/btn.vue'
 import orderBlock from '@/components/orderPosition.vue'
 import loading from '@/components/loading.vue'
@@ -283,10 +284,8 @@ export default {
         true,
         'borrower'
       )
-      console.log('currOrdersDetail', this.currOrdersDetail)
     },
     async getAllOrderDetails() {
-      console.log('allCurrIndex', this.currIndexList)
       const result = await Promise.all([
         this.isMember
           ? this.defiContract.getAllOrderDetail(
@@ -306,8 +305,25 @@ export default {
           : [],
       ])
       this.currOrdersDetail = result.flat()
-      console.log(result)
-      this.currOrdersDetail.sort((a, b) => b.startday - a.startday)
+      
+      let frontList = []
+      let middleList = []
+      let lastList = []
+      const now = Math.floor(Date.now())
+      this.currOrdersDetail.forEach(item => {
+        if (item.canOrder) {
+          middleList.push(item)
+        } else if (item.isComplete || (!item.isComplete && now / 3600000 > item.filledTime + item.settleday + BREACH_BUFFER_HOUR)) {
+          // repay, isCancel, breach => filledTime 排序 (如果沒有就 startday)(放後面)
+          lastList.push(item)
+        } else {
+          // buffer, loaning => filledTime + settleday 排序 (放前面)
+          frontList.push(item)
+        }
+      })
+      lastList.sort((a, b) => (b.filledTime || b.startday) - (a.filledTime || a.startday))
+      frontList.sort((a, b) => (a.filledTime + a.settleday) - (b.filledTime + b.settleday))
+      this.currOrdersDetail = [...frontList, ...middleList, ...lastList] 
     },
     async clickBtn(order) {
       if (this.$store.state.chainId) {
