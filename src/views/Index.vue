@@ -176,7 +176,7 @@ export default {
         .catch(() => {});
     },
     toSwapWeb() {
-      window.open(`https://bep20swaput.com/${$store.state.locale === 'chs' ? 'cn' : $store.state.locale}`);
+      window.open(`https://bep20swaput.com/${this.$store.state.locale === 'chs' ? 'cn' : this.$store.state.locale}`);
     },
     async getTotalAmount() {
       try {
