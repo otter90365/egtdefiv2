@@ -8,7 +8,7 @@
           <v-btn small value="usdt">USDT</v-btn>
         </v-btn-toggle>
 
-        contract address: {{ contractAddress[usedToken] }}
+        contract address: {{ $store.state.Defi2Address }}
       </v-col>
     </v-row>
     <v-row>
@@ -80,14 +80,8 @@
   </v-container>
 </template>
 <script>
-import { DefiAddressV2TBT, DefiAddressV2USDT } from '@/assets/contract'
 import base from '@/mixin/base'
 import DefiV2 from '@/plugins/defiV2'
-
-const Mapping = {
-  tbt: DefiAddressV2TBT,
-  usdt: DefiAddressV2USDT,
-}
 
 export default {
   mixins: [base],
@@ -105,18 +99,20 @@ export default {
       showDetail: false,
       accountIsInWhiteList: false,
       accountIsEnabled: false,
-
-      contractAddress: Mapping,
     }
   },
   async mounted() {
     await this.connectMetamask()
-    this.contract[this.usedToken] = new DefiV2(DefiAddressV2TBT)
+    this.$store.commit('updateCurrToken', 'tbt')
+    await this.$store.dispatch('getRpcUrl')
+    this.contract[this.usedToken] = new DefiV2(this.$store.state.Defi2Address)
   },
   watch: {
-    usedToken(value) {
+    async usedToken(value) {
+      this.$store.commit('updateCurrToken', value)
+      await this.$store.dispatch('getRpcUrl')
       if (!this.contract[value]) {
-        this.contract[value] = new DefiV2(Mapping[value])
+        this.contract[value] = new DefiV2(this.$store.state.Defi2Address)
       }
       if (this.account) {
         this.check()
