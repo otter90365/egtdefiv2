@@ -43,9 +43,11 @@ export default {
   },
   watch: {
     'data.token'() {
+      this.convertTime()
       this.getToken()
     },
     'data.id'() {
+      this.convertTime()
       this.rate = null
       this.value = null
       this.getToken()
@@ -177,8 +179,17 @@ export default {
       await this.getEgtValue()
       await this.getMorgageRate()
     },
+    convertTime() {
+      if (this.data.settleday < 600000) {
+        this.data.settleday = this.data.settleday * 60 * 60
+      }
+      if (this.data.filledTime < 1500000000) {
+        this.data.filledTime = this.data.filledTime * 60 * 60
+      }
+    }
   },
   async mounted() {
+    this.convertTime()
     if (this.data.filledTime) {
       this.getNow()
     }
