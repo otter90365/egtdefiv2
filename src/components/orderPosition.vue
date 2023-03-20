@@ -16,7 +16,7 @@
       <div class="black--text ml-auto rem-md-15 rem-2">
         {{
           data.canOrder
-            ? `${$t('loanDays')} ${data.settleday / 24} ${$t('day')}`
+            ? `${$t('loanDays')} ${data.settleday / 60 / 60 / 24} ${$t('day')}`
             : `${
                 status === 'breach'
                   ? $t('expired')
@@ -40,8 +40,8 @@
           {{ $t('predictApr') }}
           {{
             mode === 'loan'
-              ? round((365 / (data.settleday / 24)) * round(data.rate))
-              : round((365 / (data.settleday / 24)) * (round(data.rate) / 2))
+              ? round((365 / (data.settleday / 60 / 60 / 24)) * round(data.rate))
+              : round((365 / (data.settleday / 60 / 60 / 24)) * (round(data.rate) / 2))
           }}
           %
         </strong>
@@ -120,11 +120,11 @@
       <div class="center-block align-start">
         <span v-if="isLender">
           {{ $t('loanDateLabel') }}
-          {{ (data.filledTime * 60 * 60 * 1000) | parseDate }}
+          {{ (data.filledTime * 1000) | parseDate }}
         </span>
         <span v-else>
           {{ $t('creationTime') }}
-          {{ (data.startday * 60 * 60 * 1000) | parseDate }}
+          {{ (data.startday * 1000) | parseDate }}
         </span>
         <span>
           {{
@@ -256,15 +256,15 @@ export default {
         return 'isCancel'
       } else if (
         !this.data.isComplete &&
-        this.data.filledTime + this.data.settleday + BREACH_BUFFER_HOUR >=
-          this.now / 3600000 &&
-        this.now / 3600000 >= this.data.filledTime + this.data.settleday
+        this.data.filledTime + this.data.settleday + BREACH_BUFFER_HOUR * 3600 >=
+          this.now / 1000 &&
+        this.now / 1000 >= this.data.filledTime + this.data.settleday
       ) {
         return 'buffer'
       } else if (
         !this.data.isComplete &&
-        this.now / 3600000 >
-          this.data.filledTime + this.data.settleday + BREACH_BUFFER_HOUR
+        this.now / 1000 >
+          this.data.filledTime + this.data.settleday + BREACH_BUFFER_HOUR * 3600
       ) {
         return 'breach'
       } else {
@@ -323,7 +323,7 @@ export default {
         this.timer = setInterval(() => {
           _this.now = Math.floor(Date.now())
           _this.dueTime =
-            (_this.data.filledTime + _this.data.settleday) * 60 * 60 * 1000
+            (_this.data.filledTime + _this.data.settleday) * 1000
           let offsetTime = (_this.dueTime - _this.now) / 1000
 
           if (offsetTime < -(BREACH_BUFFER_HOUR * 3600)) {

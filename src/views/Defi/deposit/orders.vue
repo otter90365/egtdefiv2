@@ -199,7 +199,7 @@ export default {
         return 'repay'
       } else if (
         !data.isComplete &&
-        now / 3600000 > data.filledTime + data.settleday + BREACH_BUFFER_HOUR
+        now / 1000 > data.filledTime + data.settleday + BREACH_BUFFER_HOUR * 3600
       ) {
         return 'breach'
       } else {
@@ -240,7 +240,7 @@ export default {
       let lastList = []
       const now = Math.floor(Date.now())
       this.currOrdersDetail.forEach(item => {
-        if (item.isComplete || (!item.isComplete && now / 3600000 > item.filledTime + item.settleday + BREACH_BUFFER_HOUR)) {
+        if (item.isComplete || (!item.isComplete && now / 1000 > item.filledTime + item.settleday + BREACH_BUFFER_HOUR * 3600)) {
           // repay, isCancel, breach => filledTime 排序 (如果沒有就 startday)(放後面)
           lastList.push(item)
         } else {

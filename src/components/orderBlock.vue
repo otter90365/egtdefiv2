@@ -7,7 +7,7 @@
         :class="{'red--text':!data.canOrder}"
       >
         {{ data.canOrder ? 
-            `${$t('loanDays')} ${data.settleday / 24} ${$t('day')}` :
+            `${$t('loanDays')} ${data.settleday / 60 / 60 / 24} ${$t('day')}` :
             `${$t('contract')}${status === 'breach' ? $t('expired') :
                                 status === 'buffer' ? $t('buffer') : $t('due')} ${countdown.day}${$t('day')} ${countdown.hour}${$t('hour')} ${countdown.min}${$t('min')} ${countdown.sec}${$t('sec')}`}}
       </div>
@@ -64,7 +64,7 @@
     </v-row>
     
     <div class="d-flex justify-space-around align-center order-btn pa-2" :data-type="$route.params.token">
-      <div>{{ $t('APR') }} {{ mode==='loan' ? round(365 / (data.settleday / 24) * (round(data.rate))) : round(365 / (data.settleday / 24) * (round(data.rate) / 2)) }} %</div>
+      <div>{{ $t('APR') }} {{ mode==='loan' ? round(365 / (data.settleday / 60 / 60 / 24) * (round(data.rate))) : round(365 / (data.settleday / 60 / 60 / 24) * (round(data.rate) / 2)) }} %</div>
       <btn v-if="isLock" :buttonText="'approve'" :color="'red darken-1'" :isCenter="true" @clickBtn="approve()"></btn>
       <btn v-else
         :buttonText="buttonText"
@@ -190,7 +190,7 @@ export default {
       }else{
         this.timer = window.setInterval(function () {
           _this.now = Math.floor(Date.now())
-          _this.dueTime = (_this.data.filledTime + _this.data.settleday) * 60 * 60 * 1000
+          _this.dueTime = (_this.data.filledTime + _this.data.settleday) * 1000
           let offsetTIme = (_this.dueTime - _this.now) / 1000
 
           if (offsetTIme < -43200) {

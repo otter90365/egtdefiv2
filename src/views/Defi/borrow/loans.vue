@@ -313,7 +313,7 @@ export default {
       this.currOrdersDetail.forEach(item => {
         if (item.canOrder) {
           middleList.push(item)
-        } else if (item.isComplete || (!item.isComplete && now / 3600000 > item.filledTime + item.settleday + BREACH_BUFFER_HOUR)) {
+        } else if (item.isComplete || (!item.isComplete && now / 1000 > item.filledTime + item.settleday + BREACH_BUFFER_HOUR * 3600)) {
           // repay, isCancel, breach => filledTime 排序 (如果沒有就 startday)(放後面)
           lastList.push(item)
         } else {

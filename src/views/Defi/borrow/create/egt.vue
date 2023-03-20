@@ -147,7 +147,7 @@ export default {
       egtContract: null,
       loan: {
         egtAmount: null,
-        date: 7 * 24,
+        date: 7 * 24 * 60 * 60,
         amount: null,
         interest: null,
       },
@@ -245,7 +245,7 @@ export default {
           if (result.txHash) {
             this.$toasted.show(this.$t('txSend'))
             this.$refs.form.reset()
-            this.loan.date = 7 * 24
+            this.loan.date = 7 * 24 * 60 * 60
             await this.getBalance()
             this.$router.push({ name: 'Defi-borrow-create' })
           } else if (result.code === 4001) {

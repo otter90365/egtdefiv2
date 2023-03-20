@@ -189,35 +189,35 @@ export default {
           ..._dev,
           {
             name: '7',
-            value: 7 * 24,
+            value: 7 * 24 * 60 * 60,
           },
           {
             name: '14',
-            value: 14 * 24,
+            value: 14 * 24 * 60 * 60,
           },
           {
             name: '30',
-            value: 30 * 24,
+            value: 30 * 24 * 60 * 60,
           },
           {
             name: '60',
-            value: 60 * 24,
+            value: 60 * 24 * 60 * 60,
           },
           {
             name: '90',
-            value: 90 * 24,
+            value: 90 * 24 * 60 * 60,
           },
           {
             name: '120',
-            value: 120 * 24,
+            value: 120 * 24 * 60 * 60,
           },
           {
             name: '150',
-            value: 150 * 24,
+            value: 150 * 24 * 60 * 60,
           },
           {
             name: '180',
-            value: 180 * 24,
+            value: 180 * 24 * 60 * 60,
           },
         ];
       },

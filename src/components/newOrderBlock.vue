@@ -67,14 +67,14 @@ export default {
         // && this.data.filledTime + this.data.settleday + 12 >= this.now / 3600000
         return 'repay'
       } else if (
-        this.data.filledTime + this.data.settleday + BREACH_BUFFER_HOUR >=
-          this.now / 3600000 &&
-        this.now / 3600000 >= this.data.filledTime + this.data.settleday
+        this.data.filledTime + this.data.settleday + BREACH_BUFFER_HOUR * 3600 >=
+          this.now / 1000 &&
+        this.now / 1000 >= this.data.filledTime + this.data.settleday
       ) {
         return 'buffer'
       } else if (
-        this.now / 3600000 >
-        this.data.filledTime + this.data.settleday + BREACH_BUFFER_HOUR
+        this.now / 1000 >
+        this.data.filledTime + this.data.settleday + BREACH_BUFFER_HOUR * 3600
       ) {
         return 'breach'
       } else {
@@ -95,10 +95,10 @@ export default {
     apr() {
       return this.mode === 'loan'
         ? this.round(
-            (365 / (this.data.settleday / 24)) * this.round(this.data.rate)
+            (365 / (this.data.settleday / 60 / 60 / 24)) * this.round(this.data.rate)
           )
         : this.round(
-            (365 / (this.data.settleday / 24)) *
+            (365 / (this.data.settleday / 60 / 60 / 24)) *
               (this.round(this.data.rate) / 2)
           )
     },
@@ -143,7 +143,7 @@ export default {
         this.timer = window.setInterval(function () {
           _this.now = Math.floor(Date.now())
           _this.dueTime =
-            (_this.data.filledTime + _this.data.settleday) * 60 * 60 * 1000
+            (_this.data.filledTime + _this.data.settleday) * 1000
           let offsetTIme = (_this.dueTime - _this.now) / 1000
 
           if (offsetTIme < -(BREACH_BUFFER_HOUR * 3600)) {
@@ -231,7 +231,7 @@ export default {
       <strong class="order-block-loandays">
         {{
           data.canOrder
-            ? `${$t('loanDays')} ${Math.floor(data.settleday / 24)} ${$t(
+            ? `${$t('loanDays')} ${Math.floor(data.settleday / 60 / 60 / 24)} ${$t(
                 'day'
               )}`
             : `${
