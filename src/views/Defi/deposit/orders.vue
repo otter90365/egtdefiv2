@@ -37,6 +37,7 @@ import noRecord from '@/components/noRecord.vue'
 import Defi from '@/plugins/defi.js'
 import DefiV2 from '@/plugins/defiV2'
 import { BREACH_BUFFER_HOUR } from '@/constant/order'
+import { newOrderStartIndex } from '@/constant/order'
 export default {
   name: 'Defi-deposit-orders',
   data() {
@@ -45,7 +46,7 @@ export default {
       defiContract2: null,
       isMember: false,
       orders: [],
-      currOrdersDetail: [],
+      // currOrdersDetail: [],
       loadingShow: false,
       currPage: 1,
       search: '',
@@ -61,14 +62,14 @@ export default {
     noRecord,
   },
   watch: {
-    currPage: {
-      handler: async function () {
-        this.loadingShow = true
-        // await this.getOrderDetail();
-        await this.getAllOrderDetails()
-        this.loadingShow = false
-      },
-    },
+    // currPage: {
+    //   handler: async function () {
+    //     this.loadingShow = true
+    //     // await this.getOrderDetail();
+    //     await this.getAllOrderDetails()
+    //     this.loadingShow = false
+    //   },
+    // },
     search: {
       handler: async function () {
         this.loadingShow = true
@@ -99,6 +100,12 @@ export default {
         this.dataPerPage * this.currPage
       )
     },
+    currOrdersDetail() {
+      return this.allOrders.slice(
+        this.dataPerPage * (this.currPage - 1),
+        this.dataPerPage * this.currPage
+      )
+    },
   },
   methods: {
     /** @deprecated */
@@ -122,9 +129,79 @@ export default {
         this.currOrdersDetail = []
       }
     },
+    // async getSelfOrdersAll() {
+    //   const isV1Member = await this.isV1Member()
+    //   const isV2Member = await this.isV2Member()
+
+    //   /** @type {(number[] | 'error')[]} */
+    //   let allItemGroup = []
+
+    //   if (isV1Member) {
+    //     allItemGroup = await Promise.all(
+    //       this.allSearch.map((address) => {
+    //         return this.defiContract.getSelfOrders(
+    //           address,
+    //           'lender',
+    //           this.$store.state.account
+    //         )
+    //       })
+    //     )
+    //   }
+
+    //   /** @type {(number[] | 'error')[]} */
+    //   let allItemGroup2 = []
+
+    //   if (isV2Member) {
+    //     allItemGroup2 = await Promise.all(
+    //       this.$store.state.tokenListV2.addresses.map((tokenAddress) =>
+    //         this.defiContract2.getSelfOrders(
+    //           tokenAddress,
+    //           'lender',
+    //           this.$store.state.account
+    //         )
+    //       )
+    //     )
+    //   }
+
+    //   const dictWithGroupOrders = allItemGroup
+    //     .map((group, i) => {
+    //       if (group === 'error') return []
+    //       return group
+    //         .map((tokenOrder) => ({
+    //           tokenAddress: this.allSearch[i],
+    //           tokenOrder,
+    //           version: 1,
+    //         }))
+    //         .sort((a, b) => {
+    //           return parseInt(b.tokenOrder) - parseInt(a.tokenOrder)
+    //         })
+    //     })
+    //     .flat()
+
+    //   const dictWithGroupOrders2 = allItemGroup2
+    //     .map((group, i) => {
+    //       if (group === 'error') return []
+    //       return group
+    //         .map((tokenOrder) => ({
+    //           tokenAddress: this.$store.state.tokenListV2.addresses[i],
+    //           tokenOrder: parseInt(tokenOrder),
+    //           version: 2,
+    //         }))
+    //         .sort((a, b) => {
+    //           return parseInt(b.tokenOrder) - parseInt(a.tokenOrder)
+    //         })
+    //     })
+    //     .flat()
+    //   this.allOrders = [...dictWithGroupOrders2, ...dictWithGroupOrders]
+    //   this.allOrders.sort((a, b) => b.filledTime - a.filledTime)
+    //   if (this.allOrders.length === 0) {
+    //     return (this.currOrdersDetail = [])
+    //   }
+    //   await this.getAllOrderDetails()
+    // },
     async getSelfOrdersAll() {
+      this.allOrders = []
       const isV1Member = await this.isV1Member()
-      const isV2Member = await this.isV2Member()
 
       /** @type {(number[] | 'error')[]} */
       let allItemGroup = []
@@ -138,21 +215,6 @@ export default {
               this.$store.state.account
             )
           })
-        )
-      }
-
-      /** @type {(number[] | 'error')[]} */
-      let allItemGroup2 = []
-
-      if (isV2Member) {
-        allItemGroup2 = await Promise.all(
-          this.$store.state.tokenListV2.addresses.map((tokenAddress) =>
-            this.defiContract2.getSelfOrders(
-              tokenAddress,
-              'lender',
-              this.$store.state.account
-            )
-          )
         )
       }
 
@@ -171,26 +233,38 @@ export default {
         })
         .flat()
 
-      const dictWithGroupOrders2 = allItemGroup2
-        .map((group, i) => {
-          if (group === 'error') return []
-          return group
-            .map((tokenOrder) => ({
-              tokenAddress: this.$store.state.tokenListV2.addresses[i],
-              tokenOrder: parseInt(tokenOrder),
-              version: 2,
-            }))
-            .sort((a, b) => {
-              return parseInt(b.tokenOrder) - parseInt(a.tokenOrder)
-            })
+      const v1Details = await this.defiContract.getAllOrderDetail(
+        dictWithGroupOrders.filter((ele) => ele.version === 1),
+        false,
+        true,
+        'lender'
+      )
+
+      let ajax = await this.$store.dispatch('getOrderDetails', {type: 'lender'})
+      if (ajax.status === 231) {
+        let v2Details = ajax.data.map((item) => {
+          return {
+            version: 2,
+            amount: item.amount,
+            sorterId: +item.id + newOrderStartIndex,
+            borrower: item.borrower,
+            id: item.id,
+            lender: item.lender,
+            rate: item.rate * 100,
+            settleday: item.order_settle_day,
+            startday: parseInt(item.start_day),
+            token: item.token,
+            want: item.want,
+            canOrder: item.order_start_day === 0,
+            isComplete: item.complete_time !== 0,
+            filledTime: item.order_start_day,
+            completeordertime: item.complete_time,
+          };
         })
-        .flat()
-      this.allOrders = [...dictWithGroupOrders2, ...dictWithGroupOrders]
-      this.allOrders.sort((a, b) => b.filledTime - a.filledTime)
-      if (this.allOrders.length === 0) {
-        return (this.currOrdersDetail = [])
+        this.allOrders.push(...v2Details)
       }
-      await this.getAllOrderDetails()
+
+      this.allOrders.push(...v1Details)
     },
     getOrderStatus(data) {
       const now = Math.floor(Date.now())

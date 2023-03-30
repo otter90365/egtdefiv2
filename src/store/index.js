@@ -136,6 +136,10 @@ export default new Vuex.Store({
       let result = await Vue.axios.post(`${getters.backendUrl}/api/v1/orders`)
       return result.data
     },
+    async getOrderDetails({ state }, data) {
+      let result = await Vue.axios.get(`https://defi-v2.api-absolute-uv.com/api/v1/user_orders?basic_token=${state.currToken}&key=${data.type}&address=${state.account}`)
+      return result.data
+    },
     async getAllRecords(_, data) {
       // let result = await Vue.axios.get(`https://api-rinkeby.etherscan.io/api?module=account&action=txlist&&address=${data.defiAddress}&startblock=${data.startBlock}&endblock=${data.endBlock}&page=${data.page}&apikey=C9RIE4CZZGHNE7FICYK8FWWUC2MP8WAR86`)
       let result = await Vue.axios.get(`https://api.etherscan.io/api?module=account&action=txlist&&address=${data.defiAddress}&startblock=${data.startBlock}&endblock=${data.endBlock}&page=${data.page}&apikey=C9RIE4CZZGHNE7FICYK8FWWUC2MP8WAR86`)

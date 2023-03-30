@@ -125,7 +125,7 @@ export default {
       isMember: false,
       isMemberV2: false,
       orders: [],
-      currOrdersDetail: [],
+      // currOrdersDetail: [],
       loadingShow: false,
       loadingText: '',
       warningShow: false,
@@ -150,14 +150,14 @@ export default {
     noRecord,
   },
   watch: {
-    currPage: {
-      handler: async function() {
-        this.loadingShow = true
-        // await this.getOrderDetail();
-        await this.getAllOrderDetails()
-        this.loadingShow = false
-      },
-    },
+    // currPage: {
+    //   handler: async function() {
+    //     this.loadingShow = true
+    //     // await this.getOrderDetail();
+    //     await this.getAllOrderDetails()
+    //     this.loadingShow = false
+    //   },
+    // },
     search: {
       handler: async function() {
         this.loadingText = 'waitGetData'
@@ -189,28 +189,86 @@ export default {
         this.dataPerPage * this.currPage
       )
     },
+    currOrdersDetail() {
+      return this.allOrders.slice(
+        this.dataPerPage * (this.currPage - 1),
+        this.dataPerPage * this.currPage
+      )
+    },
   },
   methods: {
+    // async getSelfAllOrders() {
+    //   /** @type {(number[] | 'error')[]} */
+    //   let allItemGroup = []
+    //   if (this.isMember) {
+    //     allItemGroup = await Promise.all(
+    //       this.allSearch.map((address) => {
+    //         return this.defiContract.getSelfOrders(
+    //           address,
+    //           'borrower',
+    //           this.$store.state.account
+    //         )
+    //       })
+    //     )
+    //   }
+    //   /** @type {(number[] | 'error')[]} */
+    //   let allItemGroup2 = []
+    //   if (this.isMemberV2) {
+    //     allItemGroup2 = await Promise.all(
+    //       this.allSearchV2.map((address) => {
+    //         return this.defiContract2.getSelfOrders(
+    //           address,
+    //           'borrower',
+    //           this.$store.state.account
+    //         )
+    //       })
+    //     )
+    //   }
+
+    //   const dictWithGroupOrders = allItemGroup
+    //     .map((group, i) => {
+    //       if (group === 'error') return []
+    //       return group
+    //         .map((tokenOrder) => ({
+    //           tokenAddress: this.allSearch[i],
+    //           tokenOrder,
+    //           sorterId: +tokenOrder,
+    //           version: 1,
+    //         }))
+    //         .sort((a, b) => {
+    //           return parseInt(b.sorterId) - parseInt(a.sorterId)
+    //         })
+    //     })
+    //     .flat()
+
+    //   const dictWithGroupOrders2 = allItemGroup2
+    //     .map((group, i) => {
+    //       if (group === 'error') return []
+    //       return group
+    //         .map((tokenOrder) => ({
+    //           tokenAddress: this.allSearchV2[i],
+    //           tokenOrder,
+    //           sorterId: newOrderStartIndex + +tokenOrder,
+    //           version: 2,
+    //         }))
+    //         .sort((a, b) => {
+    //           return parseInt(b.sorterId) - parseInt(a.sorterId)
+    //         })
+    //     })
+    //     .flat()
+
+    //   this.allOrders = dictWithGroupOrders2.concat(dictWithGroupOrders)
+    //   await this.getAllOrderDetails()
+    // },
     async getSelfAllOrders() {
+      this.allOrders = []
+
       /** @type {(number[] | 'error')[]} */
       let allItemGroup = []
       if (this.isMember) {
         allItemGroup = await Promise.all(
           this.allSearch.map((address) => {
             return this.defiContract.getSelfOrders(
-              address,
-              'borrower',
-              this.$store.state.account
-            )
-          })
-        )
-      }
-      /** @type {(number[] | 'error')[]} */
-      let allItemGroup2 = []
-      if (this.isMemberV2) {
-        allItemGroup2 = await Promise.all(
-          this.allSearchV2.map((address) => {
-            return this.defiContract2.getSelfOrders(
               address,
               'borrower',
               this.$store.state.account
@@ -235,24 +293,43 @@ export default {
         })
         .flat()
 
-      const dictWithGroupOrders2 = allItemGroup2
-        .map((group, i) => {
-          if (group === 'error') return []
-          return group
-            .map((tokenOrder) => ({
-              tokenAddress: this.allSearchV2[i],
-              tokenOrder,
-              sorterId: newOrderStartIndex + +tokenOrder,
-              version: 2,
-            }))
-            .sort((a, b) => {
-              return parseInt(b.sorterId) - parseInt(a.sorterId)
-            })
-        })
-        .flat()
+      const result = await Promise.all([
+        this.isMember
+          ? this.defiContract.getAllOrderDetail(
+              dictWithGroupOrders.filter((ele) => ele.version === 1),
+              false,
+              true,
+              'borrower'
+            )
+          : []
+      ])
+      let v1Details = result.flat()
 
-      this.allOrders = dictWithGroupOrders2.concat(dictWithGroupOrders)
-      await this.getAllOrderDetails()
+      let ajax = await this.$store.dispatch('getOrderDetails', {type: 'borrower'})
+      if (ajax.status === 231) {
+        let v2Details = ajax.data.map((item) => {
+          return {
+            version: 2,
+            amount: item.amount,
+            sorterId: +item.id + newOrderStartIndex,
+            borrower: item.borrower,
+            id: item.id,
+            lender: item.lender,
+            rate: item.rate * 100,
+            settleday: item.order_settle_day,
+            startday: parseInt(item.start_day),
+            token: item.token,
+            want: item.want,
+            canOrder: item.order_start_day === 0,
+            isComplete: item.complete_time !== 0,
+            filledTime: item.order_start_day,
+            completeordertime: item.complete_time,
+          };
+        })
+        this.allOrders.push(...v2Details)
+      }
+
+      this.allOrders.push(...v1Details)
     },
     /** @deprecated */
     async getSelfOrders() {
