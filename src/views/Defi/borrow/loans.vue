@@ -324,9 +324,10 @@ export default {
             isComplete: item.complete_time !== 0,
             filledTime: item.order_start_day,
             completeordertime: item.complete_time,
+            sort: item.sort
           };
         })
-        this.allOrders.push(...v2Details)
+        this.allOrders = v2Details.sort((a, b) => a.sort - b.sort)
       }
 
       this.allOrders.push(...v1Details)
