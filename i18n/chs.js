@@ -72,7 +72,7 @@ export default {
   registryDeposit: '投资前须先注册',
   serviceRegistry: '启用您的服务',
   enterReferer: '请填写地址以启用服务',
-  enterRefererPlaceHolder: '请输入推荐人的地址',
+  enterRefererPlaceHolder: '请输入地址',
   yoursReceiveAddress: '您的收款地址',
   notInWhiteList: '您尚未拥有投单资格，请洽询联络窗口',
   // egt

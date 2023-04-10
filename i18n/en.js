@@ -246,7 +246,7 @@ export default {
     'The platform will not provide the timely market value of collateral since the market value of the collateral is subject to fluctuation. Borrowers and suppliers shall not consider the market value of the collateral on the platform as the only advice or information for investment. Therefore the platform bears no liability to inform the timely and accurate market value of the collateral.',
   continueDeposit: 'Continue',
   serviceRegistry: 'Activate Your Service',
-  enterRefererPlaceHolder: 'Enter Your Referrer’s AddressYour Address',
+  enterRefererPlaceHolder: 'Enter Address',
   yoursReceiveAddress: 'Your Address',
   notInWhiteList:
     'You are not yet qualified to place an order, please contact the contact window',
