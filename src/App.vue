@@ -11,7 +11,7 @@
     >
       <div class="d-flex flex-column" style="height: 100%">
         <div class="d-flex align-center can-click" @click="toMain()">
-          <!--<v-img
+          <v-img
             alt="Edt-Logo"
             class="shrink mr-0 mr-md-2 can-click"
             contain
@@ -19,7 +19,7 @@
             transition="scale-transition"
             :height="60"
             @click="toMain()"
-          />-->
+          />
           <span
             style="color: #4D4D4D"
             class="d-flex flex-column font-weight-regular"
