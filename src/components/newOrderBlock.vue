@@ -221,7 +221,7 @@ export default {
 </style>
 <template>
   <div class="order-block">
-    <div class="order-block-header">
+    <div class="order-block-header" :data-type="$route.params.token">
       <span class="order-block-id">
         <span class="icon-bg" :class="`${token.name}`">
           <img
@@ -257,7 +257,7 @@ export default {
         }}
       </strong>
     </div>
-    <div class="order-block-content">
+    <div class="order-block-content" :data-type="$route.params.token">
       <span>
         <label class="label"
           ><span v-html="$t('marketValueLabel')"></span>({{
@@ -333,6 +333,7 @@ export default {
   background-color: #f1f1f1;
   border-radius: 15px;
   margin: 0 7px;
+  overflow: hidden;
 }
 .order-block-header {
   background: #dcdcdc;
@@ -342,6 +343,9 @@ export default {
   align-items: center;
   @include dai_vuetify_md {
     padding: 11px 10px;
+  }
+  &[data-type="tbt"] {
+    background: #6DF6FF !important;
   }
 }
 
@@ -415,6 +419,9 @@ export default {
   @include dai_vuetify_md {
     padding: 16px 10px;
     gap: 12px;
+  }
+  &[data-type="tbt"] {
+    background-color: #D7EEFF;
   }
 }
 
