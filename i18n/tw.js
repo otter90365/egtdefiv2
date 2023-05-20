@@ -10,7 +10,7 @@ export default {
   myDepositNav: '我的<wbr>投資',
   depositRuleNav: '投資<wbr>規則',
   tokenSwapNav: '幣種<wbr>兌換',
-  headerMyLoanNav: '我的<wbr>物件',
+  headerMyLoanNav: '我的<wbr>貸款',
   borrowRuleNav: '貸款<wbr>規則',
   createLoanNav: '申請<wbr>貸款',
   gamePool: '彩金池',
@@ -45,7 +45,7 @@ export default {
     '貸款人若於該貸款合約時間到期時未還款，則抵押品會被智能合約沒收，其所有權將歸該貸款合約之投資人所有。',
   ],
   myLoans: '我的貸款',
-  headerMyLoan: '我的物件',
+  headerMyLoan: '我的貸款',
   createLoan: '申請貸款',
   // 投資
   toDeposit: '我要投資',
