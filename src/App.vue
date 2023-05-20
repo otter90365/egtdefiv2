@@ -32,7 +32,7 @@
       </div>
     </v-navigation-drawer>
 
-    <v-main id="main">
+    <v-main id="main" :data-type="$route.params.token">
       <router-view />
     </v-main>
     <div
@@ -140,6 +140,13 @@ html {
   -moz-background-size: cover;
   -o-background-size: cover;
   background-size: cover;
+  &[data-type="usdt"] {
+    background: radial-gradient(
+      66.63% 124.83% at 66.63% 35.36%,
+      #009E74 0%,
+      #000000 100%
+    );
+  }
 }
 
 .app-bar {

@@ -3,6 +3,7 @@
     <v-row
       no-gutters
       class="order-header black--text d-flex align-center py-2 px-md-5 px-3"
+      :data-type="$route.params.token"
     >
       <img
         :src="require(`@/assets/img/borrow/${token.name}.svg`)"
@@ -31,7 +32,7 @@
     </v-row>
     <v-row
       no-gutters
-      style="background-color: #dcdcdc"
+      :style="`background-color: ${$route.params.token === 'tbt' ? '#90DEF6' : '#dcdcdc'}`"
       class="py-2 px-md-5 px-3"
     >
       <v-col cols="12" class="d-flex justify-space-between rem-md-9 rem-2">
@@ -398,6 +399,9 @@ export default {
   background-color: #7bceb9;
   border-top-left-radius: 15px;
   border-top-right-radius: 15px;
+  &[data-type="tbt"] {
+    background-color: #6DF6FF !important;
+  }
 }
 .order-token-img {
   width: 36px;
@@ -408,6 +412,9 @@ export default {
 
 .order-content {
   background-color: #f1f1f1;
+  &[data-type="tbt"] {
+    background-color: #D7EEFF !important;
+  }
 }
 .order-btn {
   background-color: white;
