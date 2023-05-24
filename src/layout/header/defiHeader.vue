@@ -217,11 +217,11 @@ export default {
         </div>
       </div>
       <div class="header-wrapper">
-        <div class="d-block d-md-none route-name can-click" @click="changeHeaderType()">
+        <div class="d-flex d-md-none align-center route-name can-click" @click="changeHeaderType()">
           <strong class="mr-1">{{
             $t(nameDir[lastRoute])
           }}</strong>
-          <img src="@/assets/img/icon-switch.svg" alt="">
+          <div class="white black--text rem-0 rounded font-weight-bold" style="padding: 2px 4px 0px;">{{ $t('switch') }}</div>
         </div>
         <DefiNav :items="items"
           :active="lastRoute" />
